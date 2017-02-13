@@ -49,7 +49,7 @@ class NormalizedEnv(vectorized.ObservationWrapper):
         super(NormalizedEnv, self).__init__(env)
         self.state_mean = 0
         self.state_std = 0
-        self.alpha = 0.999
+        self.alpha = 0.9999
         self.num_steps = 0
 
     def _observation(self, observation_n):

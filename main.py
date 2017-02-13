@@ -39,7 +39,8 @@ if __name__ == '__main__':
     torch.set_num_threads(1)
 
     env = create_atari_env(args.env_name)
-    shared_model = ActorCritic(env.observation_space.shape[0], env.action_space)
+    shared_model = ActorCritic(
+        env.observation_space.shape[0], env.action_space)
     shared_model.share_memory()
 
     processes = []
