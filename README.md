@@ -6,7 +6,7 @@ This implementation is inspired by [Universe Starter Agent](https://github.com/o
 
 ## Contibutions
 
-Contributions are very welcome. If you know how to make this code better, don't hesitate to send a pool request.
+Contributions are very welcome. If you know how to make this code better, don't hesitate to send a pull request.
 
 ## Usage
 ```
