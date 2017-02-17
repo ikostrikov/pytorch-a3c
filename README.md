@@ -22,7 +22,3 @@ With 16 processes it converges for PongDeterministic-v3 in 15 minutes.
 ![PongDeterministic-v3](images/PongReward.png)
 
 For BreakoutDeterministic-v3 it takes more than several hours.
-
-## Todo
-
-- [ ] Deterministic evaluation in a separate thread
