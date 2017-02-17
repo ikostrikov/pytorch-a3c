@@ -10,7 +10,7 @@ Contributions are very welcome. If you know how to make this code better, don't 
 
 ## Usage
 ```
-python main.py --env_name "PongDeterministic-v3" --num_processes 16
+python main.py --env-name "PongDeterministic-v3" --num-processes 16
 ```
 
 ## Todo
