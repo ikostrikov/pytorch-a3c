@@ -26,19 +26,17 @@ def train(rank, args, shared_model):
     optimizer = optim.Adam(shared_model.parameters(), lr=args.lr)
 
     model.train()
-    pid = os.getpid()
 
     values = []
     log_probs = []
 
     state = env.reset()
     state = torch.from_numpy(state)
-    reward_sum = 0
     done = True
 
-    running_reward = 0
-    num_updates = 0
+    episode_length = 0
     while True:
+        episode_length += 1
         # Sync with the shared model
         model.load_state_dict(shared_model.state_dict())
         if done:
@@ -65,16 +63,11 @@ def train(rank, args, shared_model):
             log_prob = log_prob.gather(1, Variable(action))
 
             state, reward, done, _ = env.step(action.numpy())
-            reward_sum += reward
+            done = done or episode_length >= args.max_episode_length
             reward = max(min(reward, 1), -1)
-            if done:
-                running_reward = running_reward * 0.9 + reward_sum * 0.1
-                num_updates += 1
 
-                if rank == 0:
-                    print("Agent {2}, episodes {0}, running reward {1:.2f}, current reward {3}".format(
-                        num_updates, running_reward / (1 - pow(0.9, num_updates)), rank, reward_sum))
-                reward_sum = 0
+            if done:
+                episode_length = 0
                 state = env.reset()
 
             state = torch.from_numpy(state)

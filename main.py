@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from envs import create_atari_env
 from model import ActorCritic
 from train import train
-
+from test import test
 # Based on
 # https://github.com/pytorch/examples/tree/master/mnist_hogwild
 # Training settings
@@ -28,6 +28,8 @@ parser.add_argument('--num-processes', type=int, default=4, metavar='N',
                     help='how many training processes to use (default: 4)')
 parser.add_argument('--num-steps', type=int, default=20, metavar='NS',
                     help='number of forward steps in A3C (default: 20)')
+parser.add_argument('--max-episode-length', type=int, default=10000, metavar='M',
+                    help='maximum length of an episode (default: 10000)')
 parser.add_argument('--env-name', default='PongDeterministic-v3', metavar='ENV',
                     help='environment to train on (default: PongDeterministic-v3)')
 
@@ -44,7 +46,12 @@ if __name__ == '__main__':
     shared_model.share_memory()
 
     processes = []
-    for rank in range(args.num_processes):
+
+    p = mp.Process(target=test, args=(args.num_processes, args, shared_model))
+    p.start()
+    processes.append(p)
+
+    for rank in range(0, args.num_processes):
         p = mp.Process(target=train, args=(rank, args, shared_model))
         p.start()
         processes.append(p)
