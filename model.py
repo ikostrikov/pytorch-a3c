@@ -59,16 +59,6 @@ class ActorCritic(torch.nn.Module):
         self.lstm.bias_hh.data.fill_(0)
 
         self.train()
-        self.__dummy_backprob()
-
-    def __dummy_backprob(self):
-        # See: https://discuss.pytorch.org/t/problem-on-variable-grad-data/957/7
-        # An ugly hack until there is a better solution.
-        inputs = Variable(torch.randn(1, 1, 42, 42))
-        hx, cx = Variable(torch.randn(1, 256)), Variable(torch.randn(1, 256))
-        outputs = self((inputs, (hx, cx)))
-        loss = (outputs[0].mean() + outputs[1].mean()) * 0.0
-        loss.backward()
 
     def forward(self, inputs):
         inputs, (hx, cx) = inputs
