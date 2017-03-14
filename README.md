@@ -1,5 +1,8 @@
 # pytorch-a3c
 
+NEED TO USE V-0.1.9 (or lower) OF PYTORCH, AND NOT V-0.1.10 BECAUSE OF THIS ISSUE:
+https://discuss.pytorch.org/t/problem-on-variable-grad-data/957/7
+
 This is a PyTorch implementation of Asynchronous Advantage Actor Critic (A3C) from ["Asynchronous Methods for Deep Reinforcement Learning"](https://arxiv.org/pdf/1602.01783v1.pdf).
 
 This implementation is inspired by [Universe Starter Agent](https://github.com/openai/universe-starter-agent).
