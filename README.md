@@ -1,8 +1,5 @@
 # pytorch-a3c
 
-NEED TO USE V-0.1.9 (or lower) OF PYTORCH, AND NOT V-0.1.10 BECAUSE OF THIS ISSUE:
-https://discuss.pytorch.org/t/problem-on-variable-grad-data/957/7
-
 This is a PyTorch implementation of Asynchronous Advantage Actor Critic (A3C) from ["Asynchronous Methods for Deep Reinforcement Learning"](https://arxiv.org/pdf/1602.01783v1.pdf).
 
 This implementation is inspired by [Universe Starter Agent](https://github.com/openai/universe-starter-agent).
@@ -14,7 +11,7 @@ Contributions are very welcome. If you know how to make this code better, don't 
 
 ## Usage
 ```
-python main.py --env-name "PongDeterministic-v3" --num-processes 16
+OMP_NUM_THREADS=1 python main.py --env-name "PongDeterministic-v3" --num-processes 16
 ```
 
 This code runs evaluation in a separate thread in addition to 16 processes.

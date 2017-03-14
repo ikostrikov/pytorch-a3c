@@ -38,7 +38,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
-    torch.set_num_threads(1)
 
     env = create_atari_env(args.env_name)
     shared_model = ActorCritic(
