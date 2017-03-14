@@ -11,6 +11,13 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 
 
+def ensure_shared_grads(model, shared_model):
+    for param, shared_param in zip(model.parameters(), shared_model.parameters()):
+        if shared_param.grad is not None:
+            return
+        shared_param._grad = param.grad
+
+
 def train(rank, args, shared_model):
     torch.manual_seed(args.seed + rank)
 
@@ -18,10 +25,6 @@ def train(rank, args, shared_model):
     env.seed(args.seed + rank)
 
     model = ActorCritic(env.observation_space.shape[0], env.action_space)
-
-    for param, shared_param in zip(model.parameters(), shared_model.parameters()):
-        # Use gradients from the local model
-        shared_param.grad.data = param.grad.data
 
     optimizer = optim.Adam(shared_model.parameters(), lr=args.lr)
 
@@ -102,14 +105,9 @@ def train(rank, args, shared_model):
                 log_probs[i] * Variable(gae) - 0.01 * entropies[i]
 
         optimizer.zero_grad()
-        (policy_loss + 0.5 * value_loss).backward()
 
-        global_norm = 0
-        for param in model.parameters():
-            global_norm += param.grad.data.pow(2).sum()
-        global_norm = math.sqrt(global_norm)
-        ratio = 40 / global_norm
-        if ratio < 1:
-            for param in model.parameters():
-                param.grad.data.mul_(ratio)
+        (policy_loss + 0.5 * value_loss).backward()
+        torch.nn.utils.clip_grad_norm(model.parameters(), 40)
+
+        ensure_shared_grads(model, shared_model)
         optimizer.step()
