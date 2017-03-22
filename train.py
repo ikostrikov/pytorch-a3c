@@ -18,7 +18,7 @@ def ensure_shared_grads(model, shared_model):
         shared_param._grad = param.grad
 
 
-def train(rank, args, shared_model):
+def train(rank, args, shared_model, optimizer=None):
     torch.manual_seed(args.seed + rank)
 
     env = create_atari_env(args.env_name)
@@ -26,7 +26,8 @@ def train(rank, args, shared_model):
 
     model = ActorCritic(env.observation_space.shape[0], env.action_space)
 
-    optimizer = optim.Adam(shared_model.parameters(), lr=args.lr)
+    if optimizer is None:
+        optimizer = optim.Adam(shared_model.parameters(), lr=args.lr)
 
     model.train()
 

@@ -5,6 +5,7 @@ import os
 import sys
 
 import torch
+import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.nn as nn
 import torch.nn.functional as F
@@ -12,6 +13,8 @@ from envs import create_atari_env
 from model import ActorCritic
 from train import train
 from test import test
+import my_optim
+
 # Based on
 # https://github.com/pytorch/examples/tree/master/mnist_hogwild
 # Training settings
@@ -32,6 +35,8 @@ parser.add_argument('--max-episode-length', type=int, default=10000, metavar='M'
                     help='maximum length of an episode (default: 10000)')
 parser.add_argument('--env-name', default='PongDeterministic-v3', metavar='ENV',
                     help='environment to train on (default: PongDeterministic-v3)')
+parser.add_argument('--no-shared', default=False, metavar='O',
+                    help='use an optimizer without shared momentum.')
 
 
 if __name__ == '__main__':
@@ -44,6 +49,12 @@ if __name__ == '__main__':
         env.observation_space.shape[0], env.action_space)
     shared_model.share_memory()
 
+    if args.no_shared:
+        optimizer = None
+    else:
+        optimizer = my_optim.SharedAdam(shared_model.parameters(), lr=args.lr)
+        optimizer.share_memory()
+
     processes = []
 
     p = mp.Process(target=test, args=(args.num_processes, args, shared_model))
@@ -51,7 +62,7 @@ if __name__ == '__main__':
     processes.append(p)
 
     for rank in range(0, args.num_processes):
-        p = mp.Process(target=train, args=(rank, args, shared_model))
+        p = mp.Process(target=train, args=(rank, args, shared_model, optimizer))
         p.start()
         processes.append(p)
     for p in processes:
