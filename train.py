@@ -31,9 +31,6 @@ def train(rank, args, shared_model, optimizer=None):
 
     model.train()
 
-    values = []
-    log_probs = []
-
     state = env.reset()
     state = torch.from_numpy(state)
     done = True
