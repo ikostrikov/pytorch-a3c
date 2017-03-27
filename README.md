@@ -16,6 +16,12 @@ OMP_NUM_THREADS=1 python main.py --env-name "PongDeterministic-v3" --num-process
 
 This code runs evaluation in a separate thread in addition to 16 processes.
 
+Note:
+Install most recent nightly build (version '0.1.10+2fd4d08' or later) of PyTorch via this command to prevent memory leaks:
+`
+pip install git+https://github.com/pytorch/pytorch
+`
+
 ## Results
 
 With 16 processes it converges for PongDeterministic-v3 in 15 minutes.
