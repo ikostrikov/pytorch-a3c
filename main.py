@@ -33,16 +33,19 @@ parser.add_argument('--num-steps', type=int, default=20, metavar='NS',
                     help='number of forward steps in A3C (default: 20)')
 parser.add_argument('--max-episode-length', type=int, default=10000, metavar='M',
                     help='maximum length of an episode (default: 10000)')
-parser.add_argument('--env-name', default='PongDeterministic-v3', metavar='ENV',
-                    help='environment to train on (default: PongDeterministic-v3)')
+parser.add_argument('--env-name', default='PongDeterministic-v4', metavar='ENV',
+                    help='environment to train on (default: PongDeterministic-v4)')
 parser.add_argument('--no-shared', default=False, metavar='O',
                     help='use an optimizer without shared momentum.')
 
 
 if __name__ == '__main__':
+    os.environ['OMP_NUM_THREADS'] = '1'
+
     args = parser.parse_args()
 
-    torch.manual_seed(args.seed)
+    # uncomment when it's fixed in pytorch
+    # torch.manual_seed(args.seed)
 
     env = create_atari_env(args.env_name)
     shared_model = ActorCritic(
