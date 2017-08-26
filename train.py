@@ -97,12 +97,12 @@ def train(rank, args, shared_model, optimizer=None):
             gae = gae * args.gamma * args.tau + delta_t
 
             policy_loss = policy_loss - \
-                log_probs[i] * Variable(gae) - 0.01 * entropies[i]
+                log_probs[i] * Variable(gae) - args.entropy_coef * entropies[i]
 
         optimizer.zero_grad()
 
-        (policy_loss + 0.5 * value_loss).backward()
-        torch.nn.utils.clip_grad_norm(model.parameters(), 40)
+        (policy_loss + args.value_loss_coef * value_loss).backward()
+        torch.nn.utils.clip_grad_norm(model.parameters(), args.max_grad_norm)
 
         ensure_shared_grads(model, shared_model)
         optimizer.step()
