@@ -1,8 +1,8 @@
+import cv2
 import gym
 import numpy as np
 from gym.spaces.box import Box
 
-import cv2
 
 # Taken from https://github.com/openai/universe-starter-agent
 def create_atari_env(env_id):
@@ -27,7 +27,6 @@ def _process_frame42(frame):
 
 
 class AtariRescale42x42(gym.ObservationWrapper):
-
     def __init__(self, env=None):
         super(AtariRescale42x42, self).__init__(env)
         self.observation_space = Box(0.0, 1.0, [1, 42, 42])
@@ -37,7 +36,6 @@ class AtariRescale42x42(gym.ObservationWrapper):
 
 
 class NormalizedEnv(gym.ObservationWrapper):
-
     def __init__(self, env=None):
         super(NormalizedEnv, self).__init__(env)
         self.state_mean = 0

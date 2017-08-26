@@ -1,7 +1,6 @@
 import math
 
 import numpy as np
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -33,7 +32,6 @@ def weights_init(m):
 
 
 class ActorCritic(torch.nn.Module):
-
     def __init__(self, num_inputs, action_space):
         super(ActorCritic, self).__init__()
         self.conv1 = nn.Conv2d(num_inputs, 32, 3, stride=2, padding=1)

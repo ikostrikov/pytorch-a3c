@@ -5,15 +5,16 @@ import os
 import sys
 
 import torch
-import torch.optim as optim
 import torch.multiprocessing as mp
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
+
+import my_optim
 from envs import create_atari_env
 from model import ActorCritic
-from train import train
 from test import test
-import my_optim
+from train import train
 
 # Based on
 # https://github.com/pytorch/examples/tree/master/mnist_hogwild

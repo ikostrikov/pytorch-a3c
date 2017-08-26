@@ -1,12 +1,18 @@
 import math
+
 import torch
 import torch.optim as optim
+
 
 class SharedAdam(optim.Adam):
     """Implements Adam algorithm with shared states.
     """
 
-    def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
+    def __init__(self,
+                 params,
+                 lr=1e-3,
+                 betas=(0.9, 0.999),
+                 eps=1e-8,
                  weight_decay=0):
         super(SharedAdam, self).__init__(params, lr, betas, eps, weight_decay)
 
@@ -56,9 +62,10 @@ class SharedAdam(optim.Adam):
 
                 denom = exp_avg_sq.sqrt().add_(group['eps'])
 
-                bias_correction1 = 1 - beta1 ** state['step'][0]
-                bias_correction2 = 1 - beta2 ** state['step'][0]
-                step_size = group['lr'] * math.sqrt(bias_correction2) / bias_correction1
+                bias_correction1 = 1 - beta1**state['step'][0]
+                bias_correction2 = 1 - beta2**state['step'][0]
+                step_size = group['lr'] * math.sqrt(
+                    bias_correction2) / bias_correction1
 
                 p.data.addcdiv_(-step_size, exp_avg, denom)
 

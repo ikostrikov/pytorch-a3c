@@ -1,16 +1,17 @@
 import math
 import os
 import sys
+import time
+from collections import deque
 
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
-from envs import create_atari_env
-from model import ActorCritic
 from torch.autograd import Variable
 from torchvision import datasets, transforms
-import time
-from collections import deque
+
+from envs import create_atari_env
+from model import ActorCritic
 
 
 def test(rank, args, shared_model):
@@ -44,8 +45,8 @@ def test(rank, args, shared_model):
             cx = Variable(cx.data, volatile=True)
             hx = Variable(hx.data, volatile=True)
 
-        value, logit, (hx, cx) = model(
-            (Variable(state.unsqueeze(0), volatile=True), (hx, cx)))
+        value, logit, (hx, cx) = model((Variable(
+            state.unsqueeze(0), volatile=True), (hx, cx)))
         prob = F.softmax(logit)
         action = prob.max(1, keepdim=True)[1].data.numpy()
 
