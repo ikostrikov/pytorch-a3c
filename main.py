@@ -2,13 +2,9 @@ from __future__ import print_function
 
 import argparse
 import os
-import sys
 
 import torch
 import torch.multiprocessing as mp
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
 
 import my_optim
 from envs import create_atari_env
