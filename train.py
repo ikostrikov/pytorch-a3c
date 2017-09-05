@@ -34,7 +34,6 @@ def train(rank, args, shared_model, optimizer=None):
 
     episode_length = 0
     while True:
-        episode_length += 1
         # Sync with the shared model
         model.load_state_dict(shared_model.state_dict())
         if done:
@@ -50,6 +49,7 @@ def train(rank, args, shared_model, optimizer=None):
         entropies = []
 
         for step in range(args.num_steps):
+            episode_length += 1
             value, logit, (hx, cx) = model((Variable(state.unsqueeze(0)),
                                             (hx, cx)))
             prob = F.softmax(logit)
