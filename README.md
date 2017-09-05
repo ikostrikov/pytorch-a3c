@@ -11,20 +11,14 @@ Contributions are very welcome. If you know how to make this code better, don't 
 
 ## Usage
 ```
-OMP_NUM_THREADS=1 python main.py --env-name "PongDeterministic-v3" --num-processes 16
+OMP_NUM_THREADS=1 python main.py --env-name "PongDeterministic-v4" --num-processes 16
 ```
 
 This code runs evaluation in a separate thread in addition to 16 processes.
 
-Note:
-Install most recent nightly build (version '0.1.10+2fd4d08' or later) of PyTorch via this command to prevent memory leaks:
-`
-pip install git+https://github.com/pytorch/pytorch
-`
-
 ## Results
 
-With 16 processes it converges for PongDeterministic-v3 in 15 minutes.
-![PongDeterministic-v3](images/PongReward.png)
+With 16 processes it converges for PongDeterministic-v4 in 15 minutes.
+![PongDeterministic-v4](images/PongReward.png)
 
-For BreakoutDeterministic-v3 it takes more than several hours.
+For BreakoutDeterministic-v4 it takes more than several hours.
