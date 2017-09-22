@@ -7,7 +7,7 @@ In contrast to the starter agent, it uses an optimizer with shared statistics as
 
 ## A2C
 
-Also check sychronous version: [pytorch-a2c](https://github.com/ikostrikov/pytorch-a2c).
+I highly recommend to check a sychronous version and other algorithms: [pytorch-a2c-ppo-acktr](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr).
 
 ## Contributions
 
