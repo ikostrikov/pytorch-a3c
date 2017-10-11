@@ -7,9 +7,11 @@ In contrast to the starter agent, it uses an optimizer with shared statistics as
 
 ## A2C
 
-I highly recommend to check a sychronous version and other algorithms: [pytorch-a2c-ppo-acktr](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr).
+I **highly recommend** to check a sychronous version and other algorithms: [pytorch-a2c-ppo-acktr](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr).
 
 In my experience, A2C works better than A3C and ACKTR is better than both of them. Moreover, PPO is a great algorithm for continuous control. Thus, I recommend to try A2C/PPO/ACKTR first and use A3C only if you need it specifically for some reasons.
+
+Also read [OpenAI blog](https://blog.openai.com/baselines-acktr-a2c/) for more information.
 
 ## Contributions
 
