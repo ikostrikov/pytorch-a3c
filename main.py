@@ -49,7 +49,6 @@ if __name__ == '__main__':
 
     # uncomment when it's fixed in pytorch
     # torch.manual_seed(args.seed)
-
     env = create_atari_env(args.env_name)
     shared_model = ActorCritic(
         env.observation_space.shape[0], env.action_space)
@@ -63,12 +62,15 @@ if __name__ == '__main__':
 
     processes = []
 
-    p = mp.Process(target=test, args=(args.num_processes, args, shared_model))
+    counter = mp.Value('i', 0)
+    lock = mp.Lock()
+
+    p = mp.Process(target=test, args=(args.num_processes, args, shared_model, counter))
     p.start()
     processes.append(p)
 
     for rank in range(0, args.num_processes):
-        p = mp.Process(target=train, args=(rank, args, shared_model, optimizer))
+        p = mp.Process(target=train, args=(rank, args, shared_model, counter, lock, optimizer))
         p.start()
         processes.append(p)
     for p in processes:

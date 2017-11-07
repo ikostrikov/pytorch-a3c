@@ -15,7 +15,7 @@ def ensure_shared_grads(model, shared_model):
         shared_param._grad = param.grad
 
 
-def train(rank, args, shared_model, optimizer=None):
+def train(rank, args, shared_model, counter, lock, optimizer=None):
     torch.manual_seed(args.seed + rank)
 
     env = create_atari_env(args.env_name)
@@ -63,6 +63,9 @@ def train(rank, args, shared_model, optimizer=None):
             state, reward, done, _ = env.step(action.numpy())
             done = done or episode_length >= args.max_episode_length
             reward = max(min(reward, 1), -1)
+
+            with lock:
+                counter.value += 1
 
             if done:
                 episode_length = 0
