@@ -20,7 +20,7 @@ Contributions are very welcome. If you know how to make this code better, don't 
 ## Usage
 ```bash
 # Works only wih Python 3.
-OMP_NUM_THREADS=1 python3 main.py --env-name "PongDeterministic-v4" --num-processes 16
+python3 main.py --env-name "PongDeterministic-v4" --num-processes 16
 ```
 
 This code runs evaluation in a separate thread in addition to 16 processes.

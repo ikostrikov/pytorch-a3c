@@ -44,11 +44,11 @@ parser.add_argument('--no-shared', default=False,
 
 if __name__ == '__main__':
     os.environ['OMP_NUM_THREADS'] = '1'
+    os.environ['CUDA_VISIBLE_DEVICES'] = ""
 
     args = parser.parse_args()
 
-    # uncomment when it's fixed in pytorch
-    # torch.manual_seed(args.seed)
+    torch.manual_seed(args.seed)
     env = create_atari_env(args.env_name)
     shared_model = ActorCritic(
         env.observation_space.shape[0], env.action_space)
