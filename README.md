@@ -5,6 +5,17 @@ This is a PyTorch implementation of Asynchronous Advantage Actor Critic (A3C) fr
 This implementation is inspired by [Universe Starter Agent](https://github.com/openai/universe-starter-agent).
 In contrast to the starter agent, it uses an optimizer with shared statistics as in the original paper.
 
+Please use this bibtex if you want to cite this repository in your publications:
+
+    @misc{pytorchaaac,
+      author = {Kostrikov, Ilya},
+      title = {PyTorch Implementations of Asynchronous Advantage Actor Critic},
+      year = {2018},
+      publisher = {GitHub},
+      journal = {GitHub repository},
+      howpublished = {\url{https://github.com/ikostrikov/pytorch-a3c}},
+    }
+
 ## A2C
 
 I **highly recommend** to check a sychronous version and other algorithms: [pytorch-a2c-ppo-acktr](https://github.com/ikostrikov/pytorch-a2c-ppo-acktr).
