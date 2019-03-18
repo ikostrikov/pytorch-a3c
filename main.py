@@ -20,8 +20,8 @@ parser.add_argument('--lr', type=float, default=0.0001,
                     help='learning rate (default: 0.0001)')
 parser.add_argument('--gamma', type=float, default=0.99,
                     help='discount factor for rewards (default: 0.99)')
-parser.add_argument('--tau', type=float, default=1.00,
-                    help='parameter for GAE (default: 1.00)')
+parser.add_argument('--gae-lambda', type=float, default=1.00,
+                    help='lambda parameter for GAE (default: 1.00)')
 parser.add_argument('--entropy-coef', type=float, default=0.01,
                     help='entropy term coefficient (default: 0.01)')
 parser.add_argument('--value-loss-coef', type=float, default=0.5,

@@ -92,10 +92,10 @@ def train(rank, args, shared_model, counter, lock, optimizer=None):
             advantage = R - values[i]
             value_loss = value_loss + 0.5 * advantage.pow(2)
 
-            # Generalized Advantage Estimataion
+            # Generalized Advantage Estimation
             delta_t = rewards[i] + args.gamma * \
                 values[i + 1] - values[i]
-            gae = gae * args.gamma * args.tau + delta_t
+            gae = gae * args.gamma * args.gae_lambda + delta_t
 
             policy_loss = policy_loss - \
                 log_probs[i] * gae.detach() - args.entropy_coef * entropies[i]
